@@ -23,6 +23,9 @@ class Settings(BaseSettings):
     )
     database_echo: bool = False
 
+    # Phase 3 fake auth (replace in production)
+    dev_api_token: str = "dev-insecure-change-me"
+
 
 @lru_cache
 def get_settings() -> Settings:

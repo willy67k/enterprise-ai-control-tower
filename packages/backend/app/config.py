@@ -17,6 +17,12 @@ class Settings(BaseSettings):
     environment: str = "development"
     log_level: str = "INFO"
 
+    # PostgreSQL (Docker: packages/backend/docker-compose.yml)
+    database_url: str = (
+        "postgresql+psycopg://postgres:postgres@localhost:5432/control_tower"
+    )
+    database_echo: bool = False
+
 
 @lru_cache
 def get_settings() -> Settings:

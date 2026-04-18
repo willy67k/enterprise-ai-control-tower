@@ -8,6 +8,8 @@
     "install": "uv sync",
     "lint": "uv run ruff check .",
     "format": "uv run ruff format .",
-    "test": "uv run pytest"
+    "test": "uv run pytest",
+    "db:migrate": "uv run alembic upgrade head",
+    "db:revision": "uv run alembic revision --autogenerate -m"
   }
 }

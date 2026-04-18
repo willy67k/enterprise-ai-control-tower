@@ -3,6 +3,7 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
+from app.api.routes.chat import router as chat_router
 from app.api.routes.users import router as users_router
 from app.config import get_settings
 from app.utils.logger import setup_logging
@@ -22,6 +23,7 @@ async def lifespan(_app: FastAPI):
 app = FastAPI(title=settings.app_name, version=settings.app_version, lifespan=lifespan)
 
 app.include_router(users_router, prefix="/api")
+app.include_router(chat_router, prefix="/api")
 
 
 @app.get("/health")

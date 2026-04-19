@@ -23,7 +23,11 @@ dependencies = [
     "marker-pdf>=1.0",
     "transformers>=4.44.0,<4.47.0",
     "langgraph>=1.1.8",
+    "langsmith>=0.7.32",
 ]
+
+[tool.ruff.lint.per-file-ignores]
+"app/main.py" = ["E402"]
 
 [dependency-groups]
 dev = [

@@ -50,6 +50,29 @@ class Settings(BaseSettings):
     rag_chunk_overlap: int = 200
     openai_embedding_model: str = "text-embedding-3-small"
 
+    # Phase 8 — LangSmith (https://smith.langchain.com/) — LLM + graph traces, latency, tokens
+    langchain_tracing_v2: bool = Field(
+        default=True,
+        validation_alias=AliasChoices("LANGCHAIN_TRACING_V2"),
+        description="Send LangChain/LangGraph traces to LangSmith when API key is set.",
+    )
+    langchain_api_key: str = Field(
+        default="",
+        validation_alias=AliasChoices(
+            "LANGCHAIN_API_KEY",
+            "LANGSMITH_API_KEY",
+        ),
+    )
+    langchain_project: str = Field(
+        default="",
+        validation_alias=AliasChoices("LANGCHAIN_PROJECT", "LANGSMITH_PROJECT"),
+    )
+    #: Optional (e.g. EU: https://eu.api.smith.langchain.com)
+    langchain_endpoint: str = Field(
+        default="",
+        validation_alias=AliasChoices("LANGCHAIN_ENDPOINT", "LANGSMITH_ENDPOINT"),
+    )
+
     @field_validator("default_llm_provider")
     @classmethod
     def default_llm_provider_ok(cls, v: str) -> str:

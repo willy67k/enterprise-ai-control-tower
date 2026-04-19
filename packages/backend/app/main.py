@@ -1,5 +1,8 @@
+import importlib
 import logging
 from contextlib import asynccontextmanager
+
+importlib.import_module("app.runtime_bootstrap")
 
 from fastapi import FastAPI
 
@@ -32,11 +35,16 @@ app.include_router(orchestrator_router, prefix="/api")
 
 @app.get("/health")
 def health():
+    tracing_on = bool(
+        (settings.langchain_api_key or "").strip() and settings.langchain_tracing_v2
+    )
     return {
         "status": "healthy",
         "service": settings.app_name,
         "version": settings.app_version,
         "environment": settings.environment,
+        "langsmith_tracing": tracing_on,
+        "langsmith_project": settings.langchain_project if tracing_on else None,
     }
 
 

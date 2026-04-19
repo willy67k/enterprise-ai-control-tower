@@ -601,7 +601,9 @@ langgraph-sdk==0.3.13 \
 langsmith==0.7.32 \
     --hash=sha256:b59b8e106d0e4c4842e158229296086e2aa7c561e3f602acda73d3ad0062e915 \
     --hash=sha256:e1fde928990c4c52f47dc5132708cec674355d9101723d564183e965f383bf5f
-    # via langchain-core
+    # via
+    #   backend
+    #   langchain-core
 loguru==0.7.3 \
     --hash=sha256:19480589e77d47b8d85b2c827ad95d49bf31b0dcde16593892eb51dd18706eb6 \
     --hash=sha256:31a33c10c8e1e10422bfd431aeb5d351c7cf7fa671e3c4df004162264b28220c

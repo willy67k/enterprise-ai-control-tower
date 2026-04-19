@@ -125,6 +125,15 @@ def run_orchestrator(
         "final_response": "",
     }
     config = {
+        "run_name": f"orchestrator-{trace_id[:8]}",
+        "tags": ["orchestrator", "multi-agent", "control-tower"],
+        "metadata": {
+            "trace_id": trace_id,
+            "agent_run_id": str(run_id),
+            "user_id": str(user.id),
+            "llm_provider": provider or "",
+            "llm_model": model or "",
+        },
         "configurable": {
             "db": db,
             "owner_id": str(user.id),
@@ -133,7 +142,7 @@ def run_orchestrator(
             "rag_top_k": top_k,
             "trace_id": trace_id,
             "agent_run_id": str(run_id),
-        }
+        },
     }
     try:
         raw = graph.invoke(initial, config=config)

@@ -3,6 +3,7 @@
 Production should replace this with real JWT/OIDC and RBAC checks.
 """
 
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi import Depends, Header, HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.orm import Session
@@ -11,16 +12,18 @@ from app.config import get_settings
 from app.models.rbac import User
 from app.services.db import get_db
 
+bearer_scheme = HTTPBearer()
+
 
 def verify_dev_token(
-    authorization: str | None = Header(None),
+    auth: HTTPAuthorizationCredentials = Depends(bearer_scheme),
     x_api_token: str | None = Header(None, alias="X-API-Token"),
 ) -> None:
     """Require `Authorization: Bearer <token>` or `X-API-Token` matching settings."""
     settings = get_settings()
     token: str | None = None
-    if authorization and authorization.lower().startswith("bearer "):
-        token = authorization[7:].strip()
+    if auth:
+        token = auth.credentials
     elif x_api_token:
         token = x_api_token.strip()
     if not token or token != settings.dev_api_token:

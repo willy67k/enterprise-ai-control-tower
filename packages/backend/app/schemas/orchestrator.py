@@ -20,9 +20,21 @@ class OrchestratorRequest(BaseModel):
 class OrchestratorResponse(BaseModel):
     final_response: str
     intent: str
+    original_query: str = Field(
+        default="",
+        description="Full user message before decomposition.",
+    )
+    sub_queries: list[str] = Field(
+        default_factory=list,
+        description="Atomic sub-queries after decomposition.",
+    )
+    task_results: list[dict[str, Any]] = Field(
+        default_factory=list,
+        description="Per sub-query: subquery, intent, answer, documents, tool_result.",
+    )
     audit_log: list[str]
     documents: list[dict[str, Any]] = Field(
         default_factory=list,
-        description="RAG source snippets when document path ran.",
+        description="RAG source snippets (merged across document sub-tasks).",
     )
     tool_result: dict[str, Any] = Field(default_factory=dict)

@@ -7,6 +7,9 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 # Set working directory
 WORKDIR /app
 
+# Ensure uv installs to the system Python environment
+ENV UV_PROJECT_ENVIRONMENT=/usr/local
+
 # Install dependencies first for better caching
 # Copy only the files needed for installation
 COPY pyproject.toml uv.lock ./

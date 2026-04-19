@@ -24,6 +24,7 @@ services:
     environment:
       - DATABASE_URL=postgresql+psycopg://postgres:postgres@postgres:5432/control_tower
       - ENVIRONMENT=development
+      - CORS_ORIGINS=["http://localhost:7800"]
       - APP_NAME=Enterprise AI Control Tower (Docker)
       # You can override LLM keys here or via .env file
     depends_on:

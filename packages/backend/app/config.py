@@ -17,7 +17,7 @@ class Settings(BaseSettings):
     app_version: str = "0.1.0"
     environment: str = "development"
     log_level: str = "INFO"
-    cors_origins: list[str] = ["http://localhost:3000"]
+    cors_origins: list[str] = ["http://localhost:7800"]
 
     # PostgreSQL (Docker: packages/backend/docker-compose.yml)
     database_url: str = (

@@ -4,6 +4,4 @@ dist/
 .turbo/
 .env*
 .prettierrc.json
-eslint.config.ts
-tsconfig*.json
 README.md

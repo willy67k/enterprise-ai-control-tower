@@ -5,6 +5,7 @@ from fastapi import FastAPI
 
 from app.api.routes.chat import router as chat_router
 from app.api.routes.documents import router as documents_router
+from app.api.routes.orchestrator import router as orchestrator_router
 from app.api.routes.users import router as users_router
 from app.config import get_settings
 from app.utils.logger import setup_logging
@@ -26,6 +27,7 @@ app = FastAPI(title=settings.app_name, version=settings.app_version, lifespan=li
 app.include_router(users_router, prefix="/api")
 app.include_router(chat_router, prefix="/api")
 app.include_router(documents_router, prefix="/api")
+app.include_router(orchestrator_router, prefix="/api")
 
 
 @app.get("/health")

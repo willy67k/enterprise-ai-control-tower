@@ -23,8 +23,8 @@ def post_orchestrator_run(
     _: None = Depends(verify_dev_token),
     user: User = Depends(get_current_user),
 ) -> OrchestratorResponse:
-    """Decompose → router loop → document (RAG) | finance (demo) | general; then merge."""
-    state = run_orchestrator(
+    """RBAC → decompose → router loop → agents (DB-audited) → aggregate."""
+    state, trace_id, agent_run_id = run_orchestrator(
         db,
         user=user,
         query=body.query,
@@ -37,13 +37,16 @@ def post_orchestrator_run(
     if not task_results and tool_result.get("task_results"):
         task_results = list(tool_result["task_results"])
     logger.info(
-        "orchestrator done user=%s intent=%s sub_tasks=%s audit_steps=%s",
+        "orchestrator done user=%s trace=%s run=%s intent=%s sub_tasks=%s",
         user.id,
+        trace_id,
+        agent_run_id,
         state.get("intent"),
         len(state.get("sub_queries") or []),
-        len(state.get("audit_log") or []),
     )
     return OrchestratorResponse(
+        trace_id=trace_id,
+        agent_run_id=agent_run_id,
         final_response=state.get("final_response") or "",
         intent=state.get("intent") or "",
         original_query=state.get("original_query") or body.query,

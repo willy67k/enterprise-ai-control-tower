@@ -9,7 +9,12 @@ class AgentState(TypedDict):
     """Multi-agent orchestration state passed between graph nodes."""
 
     user_id: str
+    #: Primary role label (first assigned role; used for intent hints).
     role: str
+    #: All role names from the DB (union drives RBAC permissions).
+    role_names: list[str]
+    #: Effective permissions for this run (``rag``, ``finance``, ``system``).
+    permissions: list[str]
     #: Full user message (set once at graph entry).
     original_query: str
     #: Current atomic sub-query (router + leaf agents use this).

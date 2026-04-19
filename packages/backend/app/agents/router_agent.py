@@ -31,7 +31,15 @@ def classify_intent(query: str, *, role: str) -> Intent:
 
 def router_node(state: AgentState) -> dict:
     intent = classify_intent(state["query"], role=state["role"])
-    log = state["audit_log"] + [f"router: intent={intent} (openai_structured)"]
+    perms = set(state.get("permissions") or [])
+    notes: list[str] = []
+    if intent == "finance" and "finance" not in perms:
+        intent = "general"
+        notes.append("router: rbac_downgrade_finance_to_general")
+    log = state["audit_log"] + [
+        f"router: intent={intent} (openai_structured)",
+        *notes,
+    ]
     q = state["query"]
     logger.debug("router intent=%s query_preview=%s", intent, (q or "")[:120])
     return {"intent": intent, "audit_log": log}

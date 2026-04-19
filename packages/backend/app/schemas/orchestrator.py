@@ -18,6 +18,13 @@ class OrchestratorRequest(BaseModel):
 
 
 class OrchestratorResponse(BaseModel):
+    trace_id: str = Field(
+        default="", description="Correlation id for this orchestration run."
+    )
+    agent_run_id: str = Field(
+        default="",
+        description="Primary key of the agent_runs row for this request.",
+    )
     final_response: str
     intent: str
     original_query: str = Field(

@@ -10,4 +10,6 @@ langchain-openai>=1.0
 langchain-google-genai>=4.0
 langchain-anthropic>=1.0
 pgvector>=0.3.6
-pypdf>=5.1.0
+langchain-text-splitters>=0.3
+marker-pdf>=1.0
+transformers>=4.44.0,<4.47.0

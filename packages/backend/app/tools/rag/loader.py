@@ -1,11 +1,10 @@
-"""Extract plain text from uploaded bytes (txt / pdf)."""
+"""Extract plain text from uploaded bytes (txt / pdf via Marker → markdown)."""
 
 from __future__ import annotations
 
-import io
 from typing import Literal
 
-from pypdf import PdfReader
+from app.tools.rag.marker_pdf import extract_pdf_markdown
 
 SourceType = Literal["text", "pdf"]
 
@@ -28,11 +27,7 @@ def extract_text(filename: str, data: bytes) -> tuple[str, SourceType]:
     if kind == "text":
         text = data.decode("utf-8", errors="replace")
     else:
-        reader = PdfReader(io.BytesIO(data))
-        parts: list[str] = []
-        for page in reader.pages:
-            parts.append(page.extract_text() or "")
-        text = "\n".join(parts)
+        text = extract_pdf_markdown(data)
 
     cleaned = text.strip()
     if not cleaned:

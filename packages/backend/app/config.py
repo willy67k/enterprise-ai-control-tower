@@ -43,6 +43,13 @@ class Settings(BaseSettings):
     anthropic_api_key: str = ""
     anthropic_model: str = "claude-3-5-haiku-20241022"
 
+    # Phase 5 — uploads & RAG (OpenAI embeddings; VECTOR(1536) in Postgres)
+    upload_dir: str = "data/uploads"
+    max_upload_bytes: int = 10 * 1024 * 1024
+    rag_chunk_size: int = 1000
+    rag_chunk_overlap: int = 200
+    openai_embedding_model: str = "text-embedding-3-small"
+
     @field_validator("default_llm_provider")
     @classmethod
     def default_llm_provider_ok(cls, v: str) -> str:

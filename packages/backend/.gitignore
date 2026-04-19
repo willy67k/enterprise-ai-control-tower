@@ -132,6 +132,8 @@ dmypy.json
 .fig/
 
 # AI data paths
+data/uploads/*
+!data/uploads/.gitkeep
 data/sample_docs/*
 !data/sample_docs/.gitkeep
 data/embeddings_cache/*
